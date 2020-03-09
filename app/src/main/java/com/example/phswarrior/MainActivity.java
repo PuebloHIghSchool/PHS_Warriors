@@ -2,6 +2,9 @@ package com.example.phswarrior;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -12,21 +15,26 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RelativeLayout rootLayout;
-    private LinearLayout drawer ;
-    private LayoutInflater inflater;
     private View navDrawer;
-    private Toolbar toolbar;
+    private LinearLayout drawer;
 
-    //For now do not use Buttons as they are not covered up when inflating
+    RelativeLayout rootLayout;
+    LayoutInflater inflater;
+    Toolbar toolbar;
+    FrameLayout fragmentContainer;
+    LinearLayout homeButton, schoolButton, chatButton, callButton, studentButton;
+
+    //For now do not use Buttons as they are not covered up when navDrawer is displayed
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +46,20 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         navDrawer = inflater.inflate(R.layout.nav_drawer, rootLayout, false);
         drawer = navDrawer.findViewById(R.id.navDrawer);
+        fragmentContainer = findViewById(R.id.fragment_container);
+
+        homeButton = findViewById(R.id.home_button);
+        schoolButton = findViewById(R.id.school_button);
+        chatButton = findViewById(R.id.chat_button);
+        callButton = findViewById(R.id.call_button);
+        studentButton = findViewById(R.id.student_button);
+
         rootLayout.addView(navDrawer);
         navDrawer.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
+
+        Fragment homeFragment = new HomeFragment();
+        openFragment(homeFragment);
 
         navDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,5 +97,83 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setSelected(true);
+                schoolButton.setSelected(false);
+                chatButton.setSelected(false);
+                callButton.setSelected(false);
+                studentButton.setSelected(false);
+
+                Fragment homeFragment = new HomeFragment();
+                openFragment(homeFragment);
+            }
+        });
+
+        schoolButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setSelected(true);
+                homeButton.setSelected(false);
+                chatButton.setSelected(false);
+                callButton.setSelected(false);
+                studentButton.setSelected(false);
+
+                Fragment schoolFragment = new SchoolFragment();
+                openFragment(schoolFragment);
+            }
+        });
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setSelected(true);
+                homeButton.setSelected(false);
+                schoolButton.setSelected(false);
+                callButton.setSelected(false);
+                studentButton.setSelected(false);
+
+                Fragment chatFragment = new ChatFragment();
+                openFragment(chatFragment);            }
+        });
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setSelected(true);
+                homeButton.setSelected(false);
+                schoolButton.setSelected(false);
+                chatButton.setSelected(false);
+                studentButton.setSelected(false);
+
+                Fragment callFragment = new CallFragment();
+                openFragment(callFragment);
+            }
+        });
+
+        studentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setSelected(true);
+                homeButton.setSelected(false);
+                schoolButton.setSelected(false);
+                chatButton.setSelected(false);
+                callButton.setSelected(false);
+
+                Fragment studentFragment = new StudentFragment();
+                openFragment(studentFragment);
+            }
+        });
+
+
+    }
+
+    public void openFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }
