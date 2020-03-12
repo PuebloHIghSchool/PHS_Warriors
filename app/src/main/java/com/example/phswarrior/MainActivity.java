@@ -11,17 +11,10 @@ import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationSet;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         rootLayout.addView(navDrawer);
         navDrawer.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
-
-        Fragment homeFragment = new HomeFragment();
-        openFragment(homeFragment);
+        homeButton.callOnClick();
 
         navDrawer.setOnClickListener(new View.OnClickListener() {
             @Override

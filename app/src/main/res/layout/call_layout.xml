@@ -4,8 +4,10 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/temp_call"
         android:text="Call Fragment"
         android:textSize="50dp"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
